@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import CaseStudy from '../components/CaseStudy.astro';
+import Advantage from '../components/Advantage.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base>
+  <!-- Pasek postępu przewijania -->
+  <div class="fixed inset-x-0 top-0 z-[80] h-[2px]" aria-hidden="true">
+    <div class="h-full origin-left scale-x-0 bg-accent" data-progress></div>
+  </div>
+
+  <Navbar />
+
+  <main>
+    <Hero />
+    <CaseStudy />
+    <Advantage />
+    <Contact />
+  </main>
+
+  <Footer />
+</Base>

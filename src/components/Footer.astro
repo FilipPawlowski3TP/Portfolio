@@ -1,0 +1,121 @@
+---
+import { footer, navLinks, site } from '../data/content';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-hidden border-t border-line">
+  <!-- Wezwanie do działania ponad stopką -->
+  <div class="shell py-20 lg:py-24">
+    <button
+      type="button"
+      class="group flex w-full items-center justify-between gap-8 border-b border-line pb-10 text-left"
+      data-scroll-to="kontakt"
+      data-magnetic
+      data-reveal
+    >
+      <span class="text-display-l font-medium">
+        Zaczynamy <span class="font-serif italic text-accent">Twój projekt</span>?
+      </span>
+      <span
+        class="flex h-16 w-16 shrink-0 items-center justify-center border border-line transition-all duration-500 ease-swift group-hover:border-accent group-hover:bg-accent group-hover:text-base lg:h-20 lg:w-20"
+      >
+        <svg
+          class="h-6 w-6 transition-transform duration-500 ease-swift group-hover:-translate-y-1 group-hover:translate-x-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <!-- Siatka informacji -->
+  <div class="shell grid grid-cols-1 gap-12 pb-16 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="flex flex-col gap-5">
+      <div class="flex items-center gap-3">
+        <span class="flex h-9 w-9 items-center justify-center border border-line text-[0.8125rem] font-semibold">
+          {site.monogram}
+        </span>
+        <span class="text-[0.9375rem] font-medium tracking-tight">{site.name}</span>
+      </div>
+      <p class="max-w-xs text-sm leading-relaxed text-muted">{footer.tagline}</p>
+    </div>
+
+    <nav class="flex flex-col gap-4" aria-label="Nawigacja w stopce">
+      <span class="label">Nawigacja</span>
+      {
+        navLinks.map((link) => (
+          <button
+            type="button"
+            class="link-underline w-fit text-sm text-muted transition-colors duration-300 hover:text-ink"
+            data-scroll-to={link.id}
+          >
+            {link.label}
+          </button>
+        ))
+      }
+    </nav>
+
+    <div class="flex flex-col gap-4">
+      <span class="label">Kontakt</span>
+      <a
+        href={`mailto:${site.email}`}
+        class="link-underline w-fit text-sm text-muted transition-colors duration-300 hover:text-ink"
+      >
+        {site.email}
+      </a>
+      <a
+        href={`tel:${site.phone.replace(/\s/g, '')}`}
+        class="link-underline w-fit text-sm text-muted transition-colors duration-300 hover:text-ink"
+      >
+        {site.phone}
+      </a>
+      <span class="text-sm text-muted">{site.location}</span>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <span class="label">Social media</span>
+      {
+        site.socials.map((social) => (
+          <a
+            href={social.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            class="link-underline flex w-fit items-center gap-1.5 text-sm text-muted transition-colors duration-300 hover:text-ink"
+          >
+            {social.label}
+            <svg
+              class="h-3.5 w-3.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              aria-hidden="true"
+            >
+              <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Wielki wordmark w obrysie -->
+  <div class="shell select-none overflow-hidden pb-10" aria-hidden="true">
+    <div class="text-display-xl font-semibold leading-none text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.14)]">
+      {site.name}.
+    </div>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="shell flex flex-col items-start justify-between gap-3 py-7 text-xs text-muted sm:flex-row sm:items-center">
+      <span>© {year} {site.name}. Wszelkie prawa zastrzeżone.</span>
+      <span>{footer.credit}</span>
+    </div>
+  </div>
+</footer>

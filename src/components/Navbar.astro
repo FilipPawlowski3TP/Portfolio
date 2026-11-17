@@ -1,0 +1,111 @@
+---
+import { navLinks, site } from '../data/content';
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent transition-colors duration-500 ease-swift data-[scrolled=true]:border-line data-[scrolled=true]:bg-base/80 data-[scrolled=true]:backdrop-blur-xl"
+  data-header
+  data-scrolled="false"
+>
+  <div class="shell flex h-20 items-center justify-between gap-6">
+    <button type="button" class="group flex items-center gap-3" data-scroll-to="start" aria-label="Przewiń na górę">
+      <span
+        class="flex h-9 w-9 items-center justify-center border border-line text-[0.8125rem] font-semibold transition-colors duration-500 ease-swift group-hover:border-accent group-hover:text-accent"
+      >
+        {site.monogram}
+      </span>
+      <span class="text-[0.9375rem] font-medium tracking-tight">{site.name}</span>
+    </button>
+
+    <nav class="hidden items-center gap-9 lg:flex" aria-label="Główna nawigacja">
+      {
+        navLinks.map((link) => (
+          <button
+            type="button"
+            class="link-underline text-[0.8125rem] uppercase tracking-[0.14em] text-muted transition-colors duration-300 hover:text-ink"
+            data-scroll-to={link.id}
+          >
+            {link.label}
+          </button>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={`mailto:${site.email}`} class="btn btn-primary hidden !px-6 !py-3 lg:inline-flex" data-magnetic>
+        Zapytaj o wycenę
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </a>
+      <button
+        type="button"
+        class="flex h-11 w-11 items-center justify-center border border-line text-ink lg:hidden"
+        aria-label="Otwórz menu"
+        aria-expanded="false"
+        data-drawer-open
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div
+  class="invisible fixed inset-0 z-[70] flex flex-col bg-base opacity-0 transition-[opacity,visibility] duration-500 ease-swift data-[open=true]:visible data-[open=true]:opacity-100 lg:hidden"
+  data-drawer
+  data-open="false"
+  aria-hidden="true"
+>
+  <div class="shell flex h-20 shrink-0 items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="flex h-9 w-9 items-center justify-center border border-line text-[0.8125rem] font-semibold">
+        {site.monogram}
+      </span>
+      <span class="text-[0.9375rem] font-medium tracking-tight">{site.name}</span>
+    </div>
+    <button
+      type="button"
+      class="flex h-11 w-11 items-center justify-center border border-line text-ink"
+      aria-label="Zamknij menu"
+      data-drawer-close
+      tabindex="-1"
+    >
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="shell flex flex-1 flex-col justify-center gap-1" aria-label="Menu mobilne">
+    {
+      navLinks.map((link, i) => (
+        <button
+          type="button"
+          class="group flex items-baseline gap-5 border-b border-line py-5 text-left"
+          data-scroll-to={link.id}
+          tabindex="-1"
+        >
+          <span class="label w-8">0{i + 1}</span>
+          <span class="text-display-m font-medium transition-colors duration-300 group-hover:text-accent">
+            {link.label}
+          </span>
+        </button>
+      ))
+    }
+  </nav>
+
+  <div class="shell flex flex-col gap-4 pb-12">
+    <a
+      href={`mailto:${site.email}`}
+      class="text-[0.9375rem] text-ink/90 transition-colors duration-300 hover:text-accent"
+      tabindex="-1"
+    >
+      {site.email}
+    </a>
+    <span class="label !tracking-[0.18em]">{site.availability}</span>
+  </div>
+</div>

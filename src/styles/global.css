@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-base font-sans text-ink;
+    overflow-x: hidden;
+    font-feature-settings: 'ss01' on, 'cv05' on;
+  }
+
+  ::selection {
+    background: #d8ff3e;
+    color: #0a0a0c;
+  }
+
+  /* FOUC guard: ukryj elementy animowane, dopóki GSAP ich nie odsłoni.
+     Klasę .js dopisuje inline skrypt w <head> — bez JS-a nic nie jest ukryte. */
+  .js [data-reveal],
+  .js [data-hero-line],
+  .js [data-hero-fade],
+  .js [data-mask-line] {
+    opacity: 0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border: 3px solid #0a0a0c;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(216, 255, 62, 0.5);
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-14;
+  }
+
+  .label {
+    @apply text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-muted;
+  }
+
+  .hairline {
+    @apply border border-line;
+  }
+
+  /* Przyciski — ostre kąty, czytelna hierarchia, zero „pigułkowego” szablonu */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 border px-7 py-4 text-[0.8125rem] font-medium uppercase tracking-[0.14em] transition-colors duration-500 ease-swift;
+  }
+
+  .btn-primary {
+    @apply border-accent bg-accent text-base hover:bg-transparent hover:text-accent;
+  }
+
+  .btn-ghost {
+    @apply border-line text-ink hover:border-ink/40 hover:bg-white/[0.03];
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-px w-full origin-right scale-x-0 bg-accent transition-transform duration-500 ease-swift;
+  }
+  .link-underline:hover::after,
+  .link-underline[data-active='true']::after {
+    @apply origin-left scale-x-100;
+  }
+
+  /* Linie maskowane do animacji wejścia typografii */
+  .mask-line {
+    @apply block overflow-hidden pb-[0.08em];
+  }
+
+  /* Ziarno — subtelna tekstura zamiast płaskiej czerni */
+  .grain {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 78%);
+  }
+
+  /* Panele poziomego scrolla w case study */
+  .track-panel {
+    @apply flex h-full w-screen shrink-0 flex-col justify-center px-8 lg:px-16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

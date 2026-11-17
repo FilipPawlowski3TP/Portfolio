@@ -1,0 +1,103 @@
+---
+import HeroScene from '../islands/HeroScene';
+import { hero } from '../data/content';
+---
+
+<section id="start" class="relative flex min-h-screen flex-col justify-center overflow-hidden pb-16 pt-28">
+  <!-- Warstwy tła: siatka + subtelna poświata -->
+  <div class="grid-bg absolute inset-0" aria-hidden="true"></div>
+  <div
+    class="absolute -right-40 top-[-10rem] h-[38rem] w-[38rem] rounded-full bg-accent/[0.07] blur-[140px]"
+    aria-hidden="true"
+    data-parallax="90"
+  >
+  </div>
+
+  <!-- Wyspa 3D — wolno obracająca się forma reagująca na ruch myszy -->
+  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[44%] lg:block" aria-hidden="true">
+    <HeroScene client:idle />
+  </div>
+
+  <div class="shell relative z-10">
+    <!-- Dostępność -->
+    <div class="mb-8 inline-flex items-center gap-3 border border-line px-4 py-2" data-hero-fade>
+      <span class="relative flex h-2 w-2">
+        <span class="absolute inline-flex h-full w-full animate-pulse-soft rounded-full bg-accent"></span>
+      </span>
+      <span class="label !tracking-[0.18em]">{hero.badge}</span>
+    </div>
+
+    <!-- Nagłówek: linie w maskach, akcent w kursywie -->
+    <h1 class="max-w-4xl text-display-xl font-medium">
+      {
+        hero.heading.map((line) => (
+          <span class="mask-line">
+            <span class="block" data-hero-line>
+              {line.map((segment) =>
+                segment.accent ? (
+                  <span class="relative font-serif italic">
+                    {segment.text}
+                    <svg
+                      class="absolute -bottom-2 left-0 w-full"
+                      viewBox="0 0 300 12"
+                      fill="none"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <path d="M2 8.5C60 3.5 120 2.5 298 5.5" stroke="#D8FF3E" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                  </span>
+                ) : (
+                  segment.text
+                ),
+              )}
+            </span>
+          </span>
+        ))
+      }
+    </h1>
+
+    <!-- Obietnica -->
+    <p class="mt-8 max-w-2xl text-lg leading-relaxed text-muted md:text-xl" data-hero-fade>
+      {hero.paragraph}
+    </p>
+
+    <!-- CTA (magnetyczne) -->
+    <div class="mt-9 flex flex-wrap items-center gap-4" data-hero-fade>
+      {
+        hero.ctas.map((cta) => (
+          <button
+            type="button"
+            class={`btn ${cta.variant === 'primary' ? 'btn-primary' : 'btn-ghost'}`}
+            data-magnetic
+            data-scroll-to={cta.target}
+          >
+            {cta.label}
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              aria-hidden="true"
+            >
+              {cta.variant === 'primary' ? (
+                <path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+              ) : (
+                <path d="M7 7l10 10M17 13v4H9" stroke-linecap="round" stroke-linejoin="round" />
+              )}
+            </svg>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Wskaźnik przewijania -->
+  <div class="absolute bottom-8 right-6 hidden items-center gap-4 lg:right-14 lg:flex" data-hero-fade>
+    <span class="label !tracking-[0.3em]">{hero.scrollHint}</span>
+    <span class="relative h-14 w-px overflow-hidden bg-white/10">
+      <span class="absolute inset-x-0 top-0 h-1/2 animate-line-grow origin-top bg-accent"></span>
+    </span>
+  </div>
+</section>

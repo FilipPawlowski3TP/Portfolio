@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: podmień na docelową domenę portfolio
+Sitemap: https://twojadomena.pl/sitemap.xml

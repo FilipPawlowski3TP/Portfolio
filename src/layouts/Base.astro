@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import { site, seo } from '../data/content';
+
+// Schema.org ProfessionalService — poprawne dane strukturalne dla SEO
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: `${site.name} — tworzenie stron internetowych dla firm`,
+  description: seo.description,
+  url: site.url, // TODO: docelowa domena
+  email: site.email, // TODO
+  telephone: site.phone, // TODO
+  areaServed: { '@type': 'Country', name: 'Polska' },
+  serviceType: [
+    'Tworzenie stron internetowych',
+    'Projektowanie stron WWW',
+    'Sklepy internetowe',
+    'Optymalizacja SEO',
+  ],
+  sameAs: site.socials.map((social) => social.href),
+};
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0c" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={site.url} />
+    <link rel="canonical" href={site.url} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline>
+      // FOUC guard — klasy animowane ukrywamy tylko, gdy JS działa
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <slot />
+    <script>
+      import '../scripts/site.ts';
+    </script>
+  </body>
+</html>
